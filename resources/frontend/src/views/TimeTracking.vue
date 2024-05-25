@@ -1,8 +1,9 @@
 <template>
     <div>
-        <h1>Time Tracking</h1>
-        <button @click="clockIn">Clock In</button>
-        <button @click="clockOut">Clock Out</button>
+        <router-link to="/profile">Tillbaka till profil</router-link>
+        <h1>Tidsregistrering</h1>
+        <button @click="clockIn">Stämpla in</button>
+        <button @click="clockOut">Stämpla ut</button>
         <p v-if="loading">Loading...</p>
         <p v-if="error">Error: {{ error }}</p>
         <ul>

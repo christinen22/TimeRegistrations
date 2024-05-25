@@ -23,9 +23,13 @@ class TimeTrackingController extends Controller
         ]);
 
         $user = $request->user();
-
-        // Converting ISO 8601 to a MySQL-friendly format for time_in
         $timeIn = Carbon::parse($validated['time_in'])->format('Y-m-d H:i:s');
+
+        // Prevent duplicates by checking the last entry
+        $lastEntry = $user->timeTrackers()->latest()->first();
+        if ($lastEntry && $lastEntry->time_in === $timeIn) {
+            return response()->json(['message' => 'Duplicate clock-in prevented'], 409);
+        }
 
         $timeTracker = TimeTracker::create([
             'user_id' => $user->id,
@@ -35,6 +39,7 @@ class TimeTrackingController extends Controller
 
         return response()->json(['time_tracker' => $timeTracker], 201);
     }
+
 
     public function update(Request $request, $id)
     {

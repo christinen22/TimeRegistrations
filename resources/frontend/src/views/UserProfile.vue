@@ -1,10 +1,10 @@
 <template>
     <div>
-        <h1 v-if="user">Welcome, {{ user.personnummer }}</h1>
+        <h1 v-if="user">Välkommen, {{ user.personnummer }}</h1>
         <p v-if="loading">Loading...</p>
         <p v-if="error">Error: {{ error }}</p>
-        <router-link to="/profile/edit">Edit Profile</router-link>
-        <router-link to="/time-tracking">Time Tracking</router-link>
+        <router-link to="/profile/edit">Ändra lösenord</router-link>
+        <router-link to="/time-tracking">Tidsregistrering</router-link>
     </div>
 </template>
 

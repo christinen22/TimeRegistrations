@@ -1,35 +1,27 @@
 <template>
     <div>
-        <h2>Edit Profile</h2>
-        <form @submit.prevent="updateProfile">
-            <input
-                type="text"
-                v-model="userData.name"
-                placeholder="Name"
-                required
-            />
-            <input
-                type="email"
-                v-model="userData.email"
-                placeholder="Email"
-                required
-            />
-            <button type="submit">Save Changes</button>
-        </form>
+        <router-link to="/profile">Tillbaka till profil</router-link>
+        <h2>Ändra lösenord</h2>
         <form @submit.prevent="changePassword">
             <input
                 type="password"
                 v-model="oldPassword"
-                placeholder="Current Password"
+                placeholder="Nuvarande lösenord"
                 required
             />
             <input
                 type="password"
                 v-model="newPassword"
-                placeholder="New Password"
+                placeholder="Nytt lösenord"
                 required
             />
-            <button type="submit">Change Password</button>
+            <input
+                type="password"
+                v-model="passwordConfirmation"
+                placeholder="Bekräfta nytt lösenord"
+                required
+            />
+            <button type="submit">Ändra lösenord</button>
         </form>
         <p v-if="error">{{ error }}</p>
         <p v-if="message">{{ message }}</p>
@@ -48,6 +40,7 @@ export default {
             },
             oldPassword: "",
             newPassword: "",
+            passwordConfirmation: "",
             error: null,
             message: null,
         };
@@ -87,8 +80,9 @@ export default {
                 await axios.put(
                     "http://127.0.0.1:8000/api/user/password",
                     {
-                        oldPassword: this.oldPassword,
-                        newPassword: this.newPassword,
+                        current_password: this.oldPassword,
+                        password: this.newPassword,
+                        password_confirmation: this.passwordConfirmation,
                     },
                     {
                         headers: {
@@ -96,7 +90,7 @@ export default {
                         },
                     }
                 );
-                this.message = "Password changed successfully";
+                this.message = "Lösenordet ändrat";
                 this.error = null;
             } catch (error) {
                 this.error =
@@ -118,7 +112,7 @@ export default {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            this.userData = response.data;
+            this.userData = response.data.user;
         } catch (error) {
             this.error =
                 error.response?.data?.message || "Failed to fetch user data";
@@ -126,3 +120,7 @@ export default {
     },
 };
 </script>
+
+<style>
+/* Add your styles here */
+</style>
