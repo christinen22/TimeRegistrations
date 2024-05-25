@@ -3,50 +3,63 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\TimeTracking;
+use App\Models\TimeTracker;
+use Carbon\Carbon;
 
 class TimeTrackingController extends Controller
 {
     public function index(Request $request)
     {
         $user = $request->user();
-        $timeTrackings = $user->timeTrackings()->get();
-        return response()->json(['time_trackings' => $timeTrackings]);
+        $timeTrackers = $user->timeTrackers()->get();
+        return response()->json(['time_trackers' => $timeTrackers]);
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            // Validation rules for creating a new time tracking entry
+        $validated = $request->validate([
+            'time_in' => 'required|date',
+            'gps_coordinates' => 'required|string',
         ]);
 
-        $timeTracking = TimeTracking::create([
-            'user_id' => $request->user()->id,
-            // Fill in other fields as needed
+        $user = $request->user();
+
+        // Converting ISO 8601 to a MySQL-friendly format for time_in
+        $timeIn = Carbon::parse($validated['time_in'])->format('Y-m-d H:i:s');
+
+        $timeTracker = TimeTracker::create([
+            'user_id' => $user->id,
+            'time_in' => $timeIn,
+            'gps_coordinates' => $validated['gps_coordinates'],
         ]);
 
-        return response()->json(['time_tracking' => $timeTracking], 201);
+        return response()->json(['time_tracker' => $timeTracker], 201);
     }
 
     public function update(Request $request, $id)
     {
-        $timeTracking = TimeTracking::findOrFail($id);
+        $timeTracker = TimeTracker::findOrFail($id);
 
-        $request->validate([
-            // Validation rules for updating a time tracking entry
+        $validated = $request->validate([
+            'time_out' => 'required|date',
+            'gps_coordinates' => 'required|string',
         ]);
 
-        $timeTracking->update([
-            // Fill in fields to update
+        // Converting ISO 8601 to a MySQL-friendly format for time_out
+        $timeOut = Carbon::parse($validated['time_out'])->format('Y-m-d H:i:s');
+
+        $timeTracker->update([
+            'time_out' => $timeOut,
+            'gps_coordinates' => $validated['gps_coordinates'],
         ]);
 
-        return response()->json(['message' => 'Time tracking entry updated']);
+        return response()->json(['time_tracker' => $timeTracker]);
     }
 
     public function destroy(Request $request, $id)
     {
-        $timeTracking = TimeTracking::findOrFail($id);
-        $timeTracking->delete();
-        return response()->json(['message' => 'Time tracking entry deleted']);
+        $timeTracker = TimeTracker::findOrFail($id);
+        $timeTracker->delete();
+        return response()->json(['message' => 'Time tracker entry deleted']);
     }
 }

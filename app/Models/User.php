@@ -20,7 +20,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'personnummer', // Added for personnummer field
+        'personnummer',
     ];
 
     /**
@@ -54,7 +54,7 @@ class User extends Authenticatable
      */
     public function getAuthIdentifierName()
     {
-        return 'personnummer'; // Set to use personnummer as the identifier
+        return 'personnummer';
     }
 
     /**
@@ -64,7 +64,7 @@ class User extends Authenticatable
      */
     public function getAuthIdentifier()
     {
-        return $this->personnummer; // Return personnummer as the identifier
+        return $this->personnummer;
     }
 
     /**
@@ -78,12 +78,12 @@ class User extends Authenticatable
     }
 
     /**
-     * Define a relationship with TimeStamp model.
+     * Define a relationship with TimeTracker model.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function timeStamps()
+    public function timeTrackers()
     {
-        return $this->hasMany(TimeStamp::class);
+        return $this->hasMany(TimeTracker::class);
     }
 }
