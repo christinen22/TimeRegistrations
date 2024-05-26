@@ -17,13 +17,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/user/password', [UserController::class, 'updatePassword']);
 });
 
-// Time tracking routes
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/time-trackings', [TimeTrackingController::class, 'index']);
     Route::post('/time-trackings', [TimeTrackingController::class, 'store']);
     Route::put('/time-trackings/{id}', [TimeTrackingController::class, 'update']);
     Route::delete('/time-trackings/{id}', [TimeTrackingController::class, 'destroy']);
 });
+
 
 Route::get('test-cors', function () {
     return response()->json(['message' => 'CORS works!'])

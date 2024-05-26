@@ -7,7 +7,7 @@ import TimeTracking from '../views/TimeTracking.vue';
 
 const routes = [
     {
-        path: '/login',
+        path: '/',
         name: 'LogIn',
         component: LogIn
     },
