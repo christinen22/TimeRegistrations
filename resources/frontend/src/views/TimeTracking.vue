@@ -395,7 +395,7 @@ h2 {
 .time-trackings {
     list-style: none;
     padding-top: 20px;
-    align-self: center;
+    justify-content: center;
     display: flex;
     flex-wrap: wrap;
 }

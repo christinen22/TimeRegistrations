@@ -69,11 +69,12 @@ export default defineComponent({
 .user-profile-container {
     background-color: #2c2c2c;
     color: #e0e0e0;
-    padding: 30px 40px;
     border-radius: 20px;
     margin-bottom: 10rem;
     font-family: Arial, sans-serif;
     text-align: center;
+    display: flex;
+    flex-direction: column;
 }
 
 .welcome-message {

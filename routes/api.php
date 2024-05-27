@@ -24,10 +24,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/time-trackings/{id}', [TimeTrackingController::class, 'destroy']);
 });
 
-
+/*
 Route::get('test-cors', function () {
     return response()->json(['message' => 'CORS works!'])
         ->header('Access-Control-Allow-Origin', 'http://localhost:8080')
         ->header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE, PUT')
         ->header('Access-Control-Allow-Headers', 'Authorization, Content-Type');
 });
+*/
