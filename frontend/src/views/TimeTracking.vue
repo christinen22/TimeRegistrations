@@ -173,7 +173,7 @@ export default {
                     gps_coordinates: gpsCoordinates,
                 });
                 this.timeTrackings.push(response.data.time_tracker);
-                this.updateUserStatus("At Work");
+                this.updateUserStatus("Aktiv");
                 this.isClockedIn = true;
                 this.currentSessionStart = currentTime;
                 this.startTimer();
@@ -201,7 +201,7 @@ export default {
                     gps_coordinates: latestTracking.gps_coordinates,
                 });
                 latestTracking.time_out = response.data.time_tracker.time_out;
-                this.updateUserStatus("Off Work");
+                this.updateUserStatus("Inaktiv");
                 this.isClockedIn = false;
                 this.elapsedTime = this.calculateElapsedTime(
                     this.currentSessionStart,
